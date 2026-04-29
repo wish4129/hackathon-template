@@ -38,7 +38,7 @@ export function Navbar({ user, authEnabled }: NavbarProps) {
     <nav className="border-b bg-background">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
         <Link href="/" className="font-semibold text-foreground hover:opacity-80">
-          Hackathon App
+          t<span className="text-yellow-400">1</span>nder
         </Link>
 
         {user ? (

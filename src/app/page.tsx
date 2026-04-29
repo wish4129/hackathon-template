@@ -16,7 +16,9 @@ export default async function HomePage() {
   return (
     <PageLayout user={null}>
       <div className="flex min-h-[calc(100vh-7rem)] flex-col items-center justify-center text-center gap-6 -mt-24">
-        <h1 className="text-5xl font-bold tracking-tight">Hackathon App</h1>
+        <h1 className="text-5xl font-bold tracking-tight">
+          t<span className="text-yellow-400">1</span>nder
+        </h1>
         <p className="text-xl text-muted-foreground max-w-md">
           Your blank canvas. <br />
           Build something great.
