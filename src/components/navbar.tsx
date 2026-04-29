@@ -37,8 +37,8 @@ export function Navbar({ user, authEnabled }: NavbarProps) {
   return (
     <nav className="border-b bg-background">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
-        <Link href="/" className="font-semibold text-foreground hover:opacity-80">
-          t<span className="text-yellow-400">1</span>nder
+        <Link href="/" className="flex items-center hover:opacity-80">
+          <img src="/file.svg" alt="T1nder" className="h-10 w-auto" />
         </Link>
 
         {user ? (
