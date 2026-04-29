@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server"
 
 // Add paths that require authentication here.
 // Pages also call auth() directly — this is an optimistic UX redirect only.
-const PROTECTED_PATHS = ["/dashboard"]
+const PROTECTED_PATHS = ["/dashboard", "/main"]
 
 const AUTH_ENABLED = process.env.AUTH_ENABLED === "true"
 
