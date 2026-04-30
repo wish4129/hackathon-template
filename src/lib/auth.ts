@@ -79,7 +79,7 @@ if (AUTH_ENABLED) {
       },
     },
     pages: {
-      signIn: "/signin",
+      signIn: "/",
     },
   })
 } else {
@@ -97,9 +97,14 @@ if (AUTH_ENABLED) {
       }
     },
     signIn: async () => {
+      await prisma.user.upsert({
+        where: { id: "dev" },
+        create: { id: "dev", name: "Dev User", email: "dev@local" },
+        update: {},
+      })
       const cookieStore = await cookies()
       cookieStore.set("dev-session", "1", { httpOnly: true, path: "/" })
-      redirect("/dashboard")
+      redirect("/topics")
     },
     signOut: async () => {
       const cookieStore = await cookies()

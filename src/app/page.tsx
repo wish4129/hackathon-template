@@ -1,8 +1,8 @@
 import { auth, signIn } from "@/lib/auth"
 import { redirect } from "next/navigation"
-import Link from "next/link"
+import Image from "next/image"
 import { PageLayout } from "@/components/page-layout"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 
 const AUTH_ENABLED = process.env.AUTH_ENABLED === "true"
 
@@ -10,33 +10,42 @@ export default async function HomePage() {
   const session = await auth()
 
   if (session?.user) {
-    redirect("/dashboard")
+    redirect("/topics")
   }
 
   return (
     <PageLayout user={null}>
-      <div className="flex min-h-[calc(100vh-7rem)] flex-col items-center justify-center text-center gap-6 -mt-24">
-        <img src="/file.svg" alt="T1nder" className="h-64 w-auto md:h-80" />
-        <p className="text-xl text-muted-foreground max-w-md">
-          Your blank canvas. <br />
-          Build something great.
-        </p>
-        {AUTH_ENABLED ? (
-          <Link href="/signin" className={buttonVariants({ size: "lg" })}>
-            Sign in
-          </Link>
-        ) : (
+      <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center">
+        <div className="flex w-full max-w-md flex-col items-center gap-10 rounded-2xl bg-zinc-950 px-10 py-14 shadow-2xl">
+          <Image
+            src="/logo.png"
+            alt="T1nder"
+            width={320}
+            height={96}
+            priority
+            className="h-auto w-auto max-w-[260px]"
+          />
           <form
             action={async () => {
               "use server"
-              await signIn()
+              if (AUTH_ENABLED) {
+                await signIn("oidc", { redirectTo: "/topics" })
+              } else {
+                await signIn()
+              }
             }}
+            className="w-full"
           >
-            <Button type="submit" size="lg">
-              Sign in
+            <Button
+              type="submit"
+              size="lg"
+              variant="secondary"
+              className="w-full rounded-full text-base font-semibold"
+            >
+              Sign in with Okta
             </Button>
           </form>
-        )}
+        </div>
       </div>
     </PageLayout>
   )

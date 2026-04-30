@@ -51,6 +51,8 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+  votes         Vote[]
+  favorites     Favorite[]
 }
 
 model VerificationToken {
@@ -62,14 +64,64 @@ model VerificationToken {
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
-// Add your own models below this line.
-// Example:
-//
-// model Project {
-//   id        String   @id @default(cuid())
-//   name      String
-//   userId    String
-//   user      User     @relation(fields: [userId], references: [id])
-//   createdAt DateTime @default(now())
-// }
+// App models
 // ──────────────────────────────────────────────────────────────────────────────
+
+model Topic {
+  id        String     @id @default(cuid())
+  name      String
+  emoji     String
+  order     Int        @default(0)
+  createdAt DateTime   @default(now())
+  questions Question[]
+}
+
+model Question {
+  id        String   @id @default(cuid())
+  topicId   String
+  title     String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  topic     Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  options   Option[]
+  favorites Favorite[]
+
+  @@index([topicId, order])
+}
+
+model Option {
+  id         String   @id @default(cuid())
+  questionId String
+  text       String
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  votes      Vote[]
+
+  @@index([questionId, order])
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  userId    String
+  optionId  String
+  value     Boolean
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  option    Option   @relation(fields: [optionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, optionId])
+  @@index([optionId])
+}
+
+model Favorite {
+  id         String   @id @default(cuid())
+  userId     String
+  questionId String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionId])
+  @@index([questionId])
+}

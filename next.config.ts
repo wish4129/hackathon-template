@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ["app--t1nder--kevinmun.coder.techlab.onespresso.net"],
+  allowedDevOrigins: ["app--T1nder--jecktiangking.coder.techlab.onespresso.net"],
+  allowedDevOrigins: ["app--T1nder--jecktiangking.coder.techlab.onespresso.net"],
+  allowedDevOrigins: ["app--T1nder--jecktiangking.coder.techlab.onespresso.net"],
+  allowedDevOrigins: ["app--T1nder--jecktiangking.coder.techlab.onespresso.net"],
+  allowedDevOrigins: ["app--T1nder--jecktiangking.coder.techlab.onespresso.net"],
   /* config options here */
 };
 

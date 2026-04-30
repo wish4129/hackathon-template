@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server"
 
 // Add paths that require authentication here.
 // Pages also call auth() directly — this is an optimistic UX redirect only.
-const PROTECTED_PATHS = ["/dashboard", "/main"]
+const PROTECTED_PATHS = ["/topics"]
 
 const AUTH_ENABLED = process.env.AUTH_ENABLED === "true"
 
@@ -29,7 +29,7 @@ export function proxy(request: NextRequest) {
     request.cookies.get("__Secure-authjs.session-token")
 
   if (!sessionCookie) {
-    return NextResponse.redirect(new URL("/signin", request.url))
+    return NextResponse.redirect(new URL("/", request.url))
   }
 }
 

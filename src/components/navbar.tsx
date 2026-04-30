@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { signOut } from "next-auth/react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -11,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import type { ReactNode } from "react"
 
 export interface NavbarUser {
   name: string | null
@@ -21,6 +23,8 @@ export interface NavbarUser {
 interface NavbarProps {
   user: NavbarUser | null
   authEnabled: boolean
+  left?: ReactNode
+  center?: ReactNode
 }
 
 function getInitials(name: string | null): string {
@@ -33,13 +37,28 @@ function getInitials(name: string | null): string {
     .slice(0, 2)
 }
 
-export function Navbar({ user, authEnabled }: NavbarProps) {
+export function Navbar({ user, authEnabled, left, center }: NavbarProps) {
   return (
-    <nav className="border-b bg-background">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center hover:opacity-80">
-          <img src="/file.svg" alt="T1nder" className="h-10 w-auto" />
-        </Link>
+    <nav className="border-b border-black/50 bg-black">
+      <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+        {left ?? (
+          <Link href="/" className="flex items-center hover:opacity-80">
+            <Image
+              src="/logo.png"
+              alt="T1nder"
+              width={200}
+              height={56}
+              priority
+              className="h-8 w-auto"
+            />
+          </Link>
+        )}
+
+        {center && (
+          <div className="pointer-events-none absolute left-1/2 -translate-x-1/2">
+            <div className="pointer-events-auto">{center}</div>
+          </div>
+        )}
 
         {user ? (
           authEnabled ? (
@@ -67,11 +86,7 @@ export function Navbar({ user, authEnabled }: NavbarProps) {
               </Link>
             </div>
           )
-        ) : (
-          <Link href="/signin" className={buttonVariants({ size: "sm" })}>
-            Sign in
-          </Link>
-        )}
+        ) : null}
       </div>
     </nav>
   )
